@@ -7,8 +7,10 @@ contract OptimizedDistribute {
     address immutable private contributor2;
     address immutable private contributor3;
     uint256 immutable private createTime;
+    uint immutable private amountToDistribute; 
 
     constructor(address[4] memory _contributors) payable {
+        amountToDistribute = msg.value / 4;
         contributor0 = _contributors[0];
         contributor1 = _contributors[1];
         contributor2 = _contributors[2];
@@ -22,10 +24,9 @@ contract OptimizedDistribute {
             "cannot distribute yet"
         );
 
-        uint256 amount = address(this).balance / 4;
-        payable(contributor0).send(amount);
-        payable(contributor1).send(amount);
-        payable(contributor2).send(amount);
-        payable(contributor3).send(amount);
+        payable(contributor0).send(amountToDistribute);
+        payable(contributor1).send(amountToDistribute);
+        payable(contributor2).send(amountToDistribute);
+        payable(contributor3).send(amountToDistribute);
     }
 }
